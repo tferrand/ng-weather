@@ -2,7 +2,24 @@
   <h2>Enter a zipcode:</h2>
   <input type="text" #zipcode placeholder="Zipcode" class="form-control">
   <br>
-  <button class="btn btn-primary" (click)="addLocation(zipcode.value)" >
+  <button class="btn btn-primary" (click)="addLocation(zipcode.value)">
     Add location
   </button>
+  <app-state-button [initialTemplate]="initial" [workingTemplate]="adding" [doneTemplate]="done"
+    (click)="addLocation(zipcode.value)">
+  </app-state-button>
+
 </div>
+
+<!-- buttons states -->
+<ng-template #initial>
+  <button class="btn btn-primary">Add Location</button>
+</ng-template>
+
+<ng-template #adding>
+  <button class="btn btn-primary" disabled>Adding...</button>
+</ng-template>
+
+<ng-template #done>
+  <button class="btn btn-success" disabled>✅ Done</button>
+</ng-template>

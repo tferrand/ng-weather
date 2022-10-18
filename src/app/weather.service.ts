@@ -17,11 +17,11 @@ export class WeatherService implements OnDestroy {
     private weatherHttpService: WeatherHttpService
   ) {
     // Update weather value every 30 seconds
-    this.subscriptions.add(
-      interval(30000).subscribe(
-        () => this.updateCurrentConditionsFromApi()
-      )
-    );
+    // this.subscriptions.add(
+    //   interval(30000).subscribe(
+    //     () => this.updateCurrentConditionsFromApi()
+    //   )
+    // );
   }
 
   ngOnDestroy(): void {

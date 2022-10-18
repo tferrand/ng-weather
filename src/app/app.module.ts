@@ -12,6 +12,7 @@ import { CurrentConditionsComponent } from './current-conditions/current-conditi
 import { ForecastsListComponent } from './forecasts-list/forecasts-list.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { ZipcodeEntryComponent } from './zipcode-entry/zipcode-entry.component';
+import { StateButtonComponent } from './state-button/state-button.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { ZipcodeEntryComponent } from './zipcode-entry/zipcode-entry.component';
     ZipcodeEntryComponent,
     ForecastsListComponent,
     CurrentConditionsComponent,
-    MainPageComponent
+    MainPageComponent,
+    StateButtonComponent
   ],
   imports: [
     BrowserModule,
