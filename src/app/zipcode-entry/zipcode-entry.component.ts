@@ -18,7 +18,6 @@ export class ZipcodeEntryComponent {
     console.log('addLocation with zipcode', this.zipcode.nativeElement.value);
 
     return this.locationService.addLocationObs(this.zipcode.nativeElement.value).pipe(
-      // switchMap(() => throwError(() => new Error('Invalid request'))),
       finalize(() => {
         this.zipcode.nativeElement.value = '';
       })
