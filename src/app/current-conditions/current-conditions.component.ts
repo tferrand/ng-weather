@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { LocationService } from 'app/location.service';
 import { WeatherHttpService } from 'app/weather-http.service';
-import { interval, NEVER, Observable, Subscription } from 'rxjs';
+import { NEVER, Observable } from 'rxjs';
 import { WeatherService } from "../weather.service";
 
 @Component({
@@ -10,11 +10,9 @@ import { WeatherService } from "../weather.service";
   templateUrl: './current-conditions.component.html',
   styleUrls: ['./current-conditions.component.css']
 })
-export class CurrentConditionsComponent implements OnInit, OnDestroy {
+export class CurrentConditionsComponent implements OnInit {
 
   currentConditions$: Observable<any[]> = NEVER;
-
-  private subscriptions: Subscription = new Subscription();
 
   constructor(
     private weatherService: WeatherService,
@@ -25,17 +23,6 @@ export class CurrentConditionsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.currentConditions$ = this.weatherService.currentConditions$;
-
-    // Update weather value every 30 seconds
-    this.subscriptions.add(
-      interval(30000).subscribe(
-        () => this.weatherService.updateCurrentConditionsFromApi()
-      )
-    );
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
   }
 
   showForecast(zipcode: string) {

@@ -1,19 +1,31 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { BehaviorSubject, combineLatest, interval, Observable, Subscription } from 'rxjs';
 
 import { WeatherHttpService } from './weather-http.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class WeatherService {
+export class WeatherService implements OnDestroy {
 
   private currentConditionsSubject: BehaviorSubject<any[]> = new BehaviorSubject([]);
   currentConditions$: Observable<any[]> = this.currentConditionsSubject.asObservable();
 
+  private subscriptions: Subscription = new Subscription();
+
   constructor(
     private weatherHttpService: WeatherHttpService
   ) {
+    // Update weather value every 30 seconds
+    this.subscriptions.add(
+      interval(30000).subscribe(
+        () => this.updateCurrentConditionsFromApi()
+      )
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
   /**
@@ -52,7 +64,7 @@ export class WeatherService {
   updateCurrentConditionsFromApi(): void {
     combineLatest(
       this.getCurrentConditions()
-      .map(location => this.weatherHttpService.getWeather(location.zip))
+        .map(location => this.weatherHttpService.getWeather(location.zip))
     ).subscribe(
       updatedCurrentConditions => this.setCurrentConditions(updatedCurrentConditions)
     );
