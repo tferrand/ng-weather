@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { WeatherService } from "./weather.service";
 
 @Injectable({
@@ -56,6 +56,15 @@ export class LocationService {
       this.setLocations(newLocationsValue);
       this.weatherService.addCurrentConditions(zipcode);
     }
+  }
+
+  addLocationObs(zipcode: string): Observable<void> {
+    if (!this.isLocationAlreadyAdded(zipcode)) {
+      const newLocationsValue: string[] = [...this.getLocations(), zipcode];
+      this.setLocations(newLocationsValue);
+      return this.weatherService.addCurrentConditionsObs(zipcode);
+    }
+    return of();
   }
 
   /**

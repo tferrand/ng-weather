@@ -1,5 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, combineLatest, interval, Observable, Subscription } from 'rxjs';
+import { delay, tap } from 'rxjs/operators';
 
 import { WeatherHttpService } from './weather-http.service';
 
@@ -48,6 +49,13 @@ export class WeatherService implements OnDestroy {
   addCurrentConditions(zipcode: string): void {
     this.weatherHttpService.getWeather(zipcode).subscribe(
       data => this.currentConditionsSubject.next([...this.getCurrentConditions(), data])
+    );
+  }
+
+  addCurrentConditionsObs(zipcode: string): Observable<void> {
+    return this.weatherHttpService.getWeather(zipcode).pipe(
+      delay(1000), // simulate long response to view the state change on the "state-button" component
+      tap(data => this.currentConditionsSubject.next([...this.getCurrentConditions(), data]))
     );
   }
 
