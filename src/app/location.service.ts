@@ -1,33 +1,68 @@
 import { Injectable } from '@angular/core';
-import {WeatherService} from "./weather.service";
+import { BehaviorSubject, Observable } from 'rxjs';
+import { WeatherService } from "./weather.service";
 
-export const LOCATIONS : string = "locations";
-
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class LocationService {
+  private readonly LOCATIONS_STORAGE_KEY = 'locations';
 
-  locations : string[] = [];
+  private locationsSubject: BehaviorSubject<string[]> = new BehaviorSubject([]);
+  locations$: Observable<string[]> = this.locationsSubject.asObservable();
 
-  constructor(private weatherService : WeatherService) {
-    let locString = localStorage.getItem(LOCATIONS);
-    if (locString)
-      this.locations = JSON.parse(locString);
-    for (let loc of this.locations)
+  constructor(
+    private weatherService: WeatherService
+  ) {
+    this.setLocations(this.getLocations());
+    for (let loc of this.locationsSubject.value) {
       this.weatherService.addCurrentConditions(loc);
-  }
-
-  addLocation(zipcode : string){
-    this.locations.push(zipcode);
-    localStorage.setItem(LOCATIONS, JSON.stringify(this.locations));
-    this.weatherService.addCurrentConditions(zipcode);
-  }
-
-  removeLocation(zipcode : string){
-    let index = this.locations.indexOf(zipcode);
-    if (index !== -1){
-      this.locations.splice(index, 1);
-      localStorage.setItem(LOCATIONS, JSON.stringify(this.locations));
-      this.weatherService.removeCurrentConditions(zipcode);
     }
   }
+
+  /**
+   * Sets the locations in local storage
+   */
+  setLocations(zipcodes: string[]): void {
+    localStorage.setItem(this.LOCATIONS_STORAGE_KEY, JSON.stringify(zipcodes));
+    this.locationsSubject.next([...zipcodes]);
+  }
+
+  /**
+   * Gets the locations from local storage as an array of string
+   */
+  getLocations(): string[] {
+    const jsonValue = localStorage.getItem(this.LOCATIONS_STORAGE_KEY);
+    if (!!jsonValue) {
+      return JSON.parse(jsonValue) as string[];
+    }
+    return [];
+  }
+
+  /**
+   * Removes one location value from the list stored in local storage
+   */
+  removeLocation(zipcode: string): void {
+    this.setLocations(this.getLocations().filter((value) => value !== zipcode));
+    this.weatherService.removeCurrentConditions(zipcode);
+  }
+
+  /**
+   * Adds one stock value to the list stored in local storage
+   */
+  addLocation(zipcode: string): void {
+    if (!this.isLocationAlreadyAdded(zipcode)) {
+      const newLocationsValue: string[] = [...this.getLocations(), zipcode];
+      this.setLocations(newLocationsValue);
+      this.weatherService.addCurrentConditions(zipcode);
+    }
+  }
+
+  /**
+   * Returns true if location in parameter is already stored in local storage
+   */
+  isLocationAlreadyAdded(zipcode: string): boolean {
+    return this.getLocations().includes(zipcode);
+  }
+
 }
