@@ -1,0 +1,9 @@
+<label for="{{inputName}}">{{ label }} :</label>
+<input #input id="{{inputName}}" type="text" placeholder="Enter {{ label | lowercase }}" [formControl]="formControl"
+  (focus)="inputHasFocus = true" class="form-control" />
+
+<ul *ngIf="inputHasFocus">
+  <li *ngFor="let item of filteredOptions$ | async" [innerHTML]="item.label | highlight:formControl.value"
+    (click)="formControl.setValue(item.value); inputHasFocus = false;">
+  </li>
+</ul>

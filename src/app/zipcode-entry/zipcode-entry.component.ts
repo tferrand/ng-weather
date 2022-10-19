@@ -1,6 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { AutocompleteOption } from 'app/autocomplete-option.model';
+import { Observable, of } from 'rxjs';
+import { finalize, map } from 'rxjs/operators';
 import { LocationService } from "../location.service";
 
 @Component({
@@ -10,8 +12,20 @@ import { LocationService } from "../location.service";
 export class ZipcodeEntryComponent {
   @ViewChild('zipcode') zipcode: ElementRef;
 
+  countriesOptions$: Observable<AutocompleteOption[]> = this.http.get<{ name: string, code: string }[]>('/assets/countries.json')
+    .pipe(
+      map(data => data.map(country => {
+        const autocompleteOption: AutocompleteOption = {
+          label: `${country.name} (${country.code})`,
+          value: country.code
+        }
+        return autocompleteOption;
+      }))
+    );
+
   constructor(
-    private locationService: LocationService
+    private locationService: LocationService,
+    private http: HttpClient
   ) { }
 
   addLocation(): Observable<any> {

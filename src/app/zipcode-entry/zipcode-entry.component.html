@@ -1,7 +1,12 @@
 <div class="well">
-  <h2>Enter a zipcode:</h2>
-  <input type="text" #zipcode placeholder="Zipcode" class="form-control">
+  
+  <app-input-autocomplete [inputName]="'country'" [label]="'Country name'" [options$]="countriesOptions$"></app-input-autocomplete>
   <br>
+  
+  <label for="zipcode">Enter a zipcode :</label>
+  <input id="zipcode" type="text" #zipcode placeholder="Zipcode" class="form-control">
+  <br>
+
   <app-state-button [clickAction]="addLocation.bind(this)" [initialTemplate]="initial" [workingTemplate]="adding"
     [doneTemplate]="done"></app-state-button>
 
