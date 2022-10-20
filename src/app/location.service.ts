@@ -25,9 +25,9 @@ export class LocationService {
   /**
    * Sets the locations in local storage
    */
-  setLocations(zipcodes: WeatherLocation[]): void {
-    localStorage.setItem(this.LOCATIONS_STORAGE_KEY, JSON.stringify(zipcodes));
-    this.locationsSubject.next([...zipcodes]);
+  setLocations(locations: WeatherLocation[]): void {
+    localStorage.setItem(this.LOCATIONS_STORAGE_KEY, JSON.stringify(locations));
+    this.locationsSubject.next([...locations]);
   }
 
   /**
