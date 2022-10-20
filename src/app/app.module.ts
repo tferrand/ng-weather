@@ -39,7 +39,11 @@ import { ZipcodeEntryComponent } from './zipcode-entry/zipcode-entry.component';
     ReactiveFormsModule
   ],
   providers: [
-    { provide: APP_BASE_HREF, useValue: environment.production ? projectJson.projects['ng-weather'].architect.build.configurations.production.baseHref : '/' }
+    {
+      provide: APP_BASE_HREF, useValue: environment.production
+        ? projectJson.projects['ng-weather'].architect.build.configurations.production.baseHref
+        : projectJson.projects['ng-weather'].architect.build.configurations.development.baseHref
+    }
   ],
   bootstrap: [AppComponent]
 })

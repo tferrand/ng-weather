@@ -36,6 +36,7 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "/ng-weather/",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -50,11 +51,13 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "serviceWorker": true,
-              "baseHref": "/ng-weather/"
+              "serviceWorker": true
+            },
+            "development": {
+              "baseHref": "/"
             }
           },
-          "defaultConfiguration": ""
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -64,8 +67,12 @@
           "configurations": {
             "production": {
               "browserTarget": "ng-weather:build:production"
+            },
+            "development": {
+              "browserTarget": "ng-weather:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
