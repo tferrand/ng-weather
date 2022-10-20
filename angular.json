@@ -32,8 +32,7 @@
             "buildOptimizer": false,
             "sourceMap": true,
             "optimization": false,
-            "namedChunks": true,
-            "baseHref": "/ng-weather/"
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -51,7 +50,8 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "serviceWorker": true
+              "serviceWorker": true,
+              "baseHref": "/ng-weather/"
             }
           },
           "defaultConfiguration": ""
