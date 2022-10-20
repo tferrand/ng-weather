@@ -2,9 +2,11 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { APP_BASE_HREF } from '@angular/common';
 import { HttpClientModule } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
 import { ServiceWorkerModule } from '@angular/service-worker';
+import projectJson from '../../angular.json';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { routing } from "./app.routing";
@@ -35,6 +37,9 @@ import { ZipcodeEntryComponent } from './zipcode-entry/zipcode-entry.component';
     routing,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
     ReactiveFormsModule
+  ],
+  providers: [
+    { provide: APP_BASE_HREF, useValue: projectJson.projects['ng-weather'].architect.build.options.baseHref }
   ],
   bootstrap: [AppComponent]
 })

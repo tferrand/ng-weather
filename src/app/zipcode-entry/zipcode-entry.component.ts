@@ -1,5 +1,6 @@
+import { APP_BASE_HREF } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AutocompleteOption } from 'app/autocomplete-option.model';
 import { WeatherLocation } from 'app/weather-location.model';
@@ -19,7 +20,7 @@ export class ZipcodeEntryComponent {
     zipcode: ['', [Validators.required]]
   });
 
-  countriesOptions$: Observable<AutocompleteOption[]> = this.http.get<{ name: string, code: string }[]>('/assets/countries.json')
+  countriesOptions$: Observable<AutocompleteOption[]> = this.http.get<{ name: string, code: string }[]>(`${this.baseHref}assets/countries.json`)
     .pipe(
       map(data => data.map(country => {
         const autocompleteOption: AutocompleteOption = {
@@ -31,6 +32,7 @@ export class ZipcodeEntryComponent {
     );
 
   constructor(
+    @Inject(APP_BASE_HREF) public baseHref: string,
     private locationService: LocationService,
     private http: HttpClient,
     private fb: FormBuilder
