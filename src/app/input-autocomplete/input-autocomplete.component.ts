@@ -49,14 +49,16 @@ export class InputAutocompleteComponent implements OnInit, OnDestroy, ControlVal
       })
     );
 
-    this.filteredOptions$ = this.formControl.valueChanges.pipe(
-      startWith(this.formControl.value),
-      debounceTime(400),
-      // distinctUntilChanged(),
-      switchMap(val => {
-        return this.filter(val || '')
-      })
-    )
+    this.filteredOptions$ = this.formControl.valueChanges
+      .pipe(
+        startWith(''),
+        debounceTime(400),
+        // distinctUntilChanged(),
+        switchMap(val => {
+          return this.filter(this.formControl.value || '')
+        })
+      )
+
   }
 
   ngOnDestroy(): void {
