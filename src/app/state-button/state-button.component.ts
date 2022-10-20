@@ -4,8 +4,7 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-state-button',
-  templateUrl: './state-button.component.html',
-  styleUrls: ['./state-button.component.css']
+  templateUrl: './state-button.component.html'
 })
 export class StateButtonComponent {
 
