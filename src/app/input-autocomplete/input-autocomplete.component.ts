@@ -1,7 +1,7 @@
-import { Component, ElementRef, forwardRef, HostListener, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, forwardRef, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { AutocompleteOption } from 'app/autocomplete-option.model';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { debounceTime, map, startWith, switchMap } from 'rxjs/operators';
 
 @Component({
@@ -16,7 +16,7 @@ import { debounceTime, map, startWith, switchMap } from 'rxjs/operators';
     }
   ]
 })
-export class InputAutocompleteComponent implements OnInit, ControlValueAccessor {
+export class InputAutocompleteComponent implements OnInit, OnDestroy, ControlValueAccessor {
 
   @Input()
   inputName: string = '';
@@ -36,14 +36,18 @@ export class InputAutocompleteComponent implements OnInit, ControlValueAccessor 
   filteredOptions$: Observable<AutocompleteOption[]>;
   inputHasFocus: boolean;
 
+  private subscriptions: Subscription = new Subscription();
+
   constructor(
     private elementRef: ElementRef
   ) { }
 
   ngOnInit(): void {
-    this.formControl.valueChanges.subscribe(() => {
-      this._onChange(this.formControl.value);
-    });
+    this.subscriptions.add(
+      this.formControl.valueChanges.subscribe(() => {
+        this._onChange(this.formControl.value);
+      })
+    );
 
     this.filteredOptions$ = this.formControl.valueChanges.pipe(
       startWith(this.formControl.value),
@@ -53,6 +57,10 @@ export class InputAutocompleteComponent implements OnInit, ControlValueAccessor 
         return this.filter(val || '')
       })
     )
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
   filter(val: string): Observable<AutocompleteOption[]> {
