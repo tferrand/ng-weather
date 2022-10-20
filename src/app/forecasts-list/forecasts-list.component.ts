@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { WeatherHttpService } from 'app/weather-http.service';
+import { WeatherLocation } from 'app/weather-location.model';
 
 @Component({
   selector: 'app-forecasts-list',
@@ -9,7 +10,6 @@ import { WeatherHttpService } from 'app/weather-http.service';
 })
 export class ForecastsListComponent {
 
-  zipcode: string;
   forecast: any;
 
   constructor(
@@ -17,8 +17,13 @@ export class ForecastsListComponent {
     private route: ActivatedRoute
   ) {
     this.route.params.subscribe(params => {
-      this.zipcode = params['zipcode'];
-      this.weatherHttpService.getForecast(this.zipcode)
+
+      const weatherLocation: WeatherLocation = {
+        countrycode: params['countrycode'],
+        zipcode: params['zipcode']
+      };
+
+      this.weatherHttpService.getForecast(weatherLocation)
         .subscribe(data => this.forecast = data);
     });
   }

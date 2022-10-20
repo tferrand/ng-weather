@@ -1,5 +1,5 @@
-import { Component, ElementRef, HostListener, Input, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, ElementRef, forwardRef, HostListener, Input, OnInit } from '@angular/core';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { AutocompleteOption } from 'app/autocomplete-option.model';
 import { Observable } from 'rxjs';
 import { debounceTime, map, startWith, switchMap } from 'rxjs/operators';
@@ -7,9 +7,16 @@ import { debounceTime, map, startWith, switchMap } from 'rxjs/operators';
 @Component({
   selector: 'app-input-autocomplete',
   templateUrl: './input-autocomplete.component.html',
-  styleUrls: ['./input-autocomplete.component.css']
+  styleUrls: ['./input-autocomplete.component.css'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      multi: true,
+      useExisting: forwardRef(() => InputAutocompleteComponent)
+    }
+  ]
 })
-export class InputAutocompleteComponent implements OnInit {
+export class InputAutocompleteComponent implements OnInit, ControlValueAccessor {
 
   @Input()
   inputName: string = '';
@@ -26,7 +33,7 @@ export class InputAutocompleteComponent implements OnInit {
   }
 
   formControl: FormControl = new FormControl('');
-  filteredOptions$: Observable<any>;
+  filteredOptions$: Observable<AutocompleteOption[]>;
   inputHasFocus: boolean;
 
   constructor(
@@ -34,6 +41,10 @@ export class InputAutocompleteComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.formControl.valueChanges.subscribe(() => {
+      this._onChange(this.formControl.value);
+    });
+
     this.filteredOptions$ = this.formControl.valueChanges.pipe(
       startWith(this.formControl.value),
       debounceTime(400),
@@ -55,4 +66,25 @@ export class InputAutocompleteComponent implements OnInit {
       );
   }
 
+  writeValue(value: string) {
+    this.formControl.setValue(value);
+  }
+
+  private _onChange = (_value: string): void => undefined;
+  public registerOnChange(fn: (value: string) => void): void {
+    this._onChange = fn;
+  }
+
+  public onTouched = (): void => undefined;
+  public registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
+  }
+
+  public setDisabledState(isDisabled: boolean): void {
+    if (isDisabled) {
+      this.formControl.disable();
+    } else {
+      this.formControl.enable();
+    }
+  }
 }

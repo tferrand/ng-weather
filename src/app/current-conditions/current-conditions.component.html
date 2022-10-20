@@ -1,7 +1,7 @@
 <div>
-  <div *ngFor="let location of currentConditions$ | async" class="well flex" (click)="showForecast(location.zip)">
+  <div *ngFor="let location of currentConditions$ | async" class="well flex">
     <div>
-      <h3>{{location.data.name}} ({{location.zip}})</h3>
+      <h3>{{location.data.name}} ({{location.location.countrycode}}, {{location.location.zipcode}})</h3>
       <h4>Current conditions: {{location.data.weather[0].main}}</h4>
       <h4>Temperatures today:</h4>
       <p>
@@ -13,11 +13,11 @@
         Time of request : {{ location.date | date:'medium' }}
       </p>
       <p>
-        <a [routerLink]="['/forecast', location.zip]" >Show 5-day forecast for {{location.data.name}}</a>
+        <a [routerLink]="['/forecast', location.location.countrycode, location.location.zipcode]" >Show 5-day forecast for {{location.data.name}}</a>
       </p>
     </div>
     <div>
-      <span class="close" (click)="$event.stopPropagation(); removeLocation(location.zip)">&times;</span>
+      <span class="close" (click)="$event.stopPropagation(); removeLocation(location.location.zipcode)">&times;</span>
       <img [src]="weatherHttpService.getWeatherIcon(location.data.weather[0].id)">
     </div>
  </div>

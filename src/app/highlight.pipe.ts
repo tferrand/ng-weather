@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class HighlightPipe implements PipeTransform {
 
-  transform(value: string, args: any): any {
+  transform(value: string, args: string): string {
     if (!args) {
       return value;
     }

@@ -3,6 +3,8 @@ import { Observable } from 'rxjs';
 
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { WeatherLocation } from './weather-location.model';
+import { CurrentCondition } from './current-condition.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,10 +22,11 @@ export class WeatherHttpService {
   /**
    * Request to the weather API for the zipcode
    */
-  getWeather(zipcode: string): Observable<any> {
-    return this.http.get(`${WeatherHttpService.URL}/weather?zip=${zipcode},us&units=imperial&APPID=${WeatherHttpService.APPID}`).pipe(
+  getWeather(location: WeatherLocation): Observable<CurrentCondition> {
+    return this.http.get<CurrentCondition>(`${WeatherHttpService.URL}/weather?zip=${location.zipcode},${location.countrycode.toLocaleLowerCase()}&units=imperial&APPID=${WeatherHttpService.APPID}`).pipe(
       map(data => {
-        return { zip: zipcode, data: data, date: new Date() };
+        const mapped: CurrentCondition = { location, data: data, date: new Date() };
+        return mapped;
       })
     )
   }
@@ -31,8 +34,8 @@ export class WeatherHttpService {
   /**
    * Request to the forecast API for the zipcode
    */
-  getForecast(zipcode: string): Observable<any> {
-    return this.http.get(`${WeatherHttpService.URL}/forecast/daily?zip=${zipcode},us&units=imperial&cnt=5&APPID=${WeatherHttpService.APPID}`);
+  getForecast(location: WeatherLocation): Observable<any> {
+    return this.http.get(`${WeatherHttpService.URL}/forecast/daily?zip=${location.zipcode},${location.countrycode.toLocaleLowerCase()}&units=imperial&cnt=5&APPID=${WeatherHttpService.APPID}`);
   }
 
   getWeatherIcon(id) {

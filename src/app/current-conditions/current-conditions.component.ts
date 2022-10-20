@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
+import { CurrentCondition } from 'app/current-condition.model';
 import { LocationService } from 'app/location.service';
 import { WeatherHttpService } from 'app/weather-http.service';
+import { WeatherLocation } from 'app/weather-location.model';
 import { NEVER, Observable } from 'rxjs';
 import { WeatherService } from "../weather.service";
 
@@ -12,7 +14,7 @@ import { WeatherService } from "../weather.service";
 })
 export class CurrentConditionsComponent implements OnInit {
 
-  currentConditions$: Observable<any[]> = NEVER;
+  currentConditions$: Observable<CurrentCondition[]> = NEVER;
 
   constructor(
     private weatherService: WeatherService,
@@ -23,10 +25,6 @@ export class CurrentConditionsComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentConditions$ = this.weatherService.currentConditions$;
-  }
-
-  showForecast(zipcode: string) {
-    this.router.navigate(['/forecast', zipcode])
   }
 
   removeLocation(zipcode: string) {

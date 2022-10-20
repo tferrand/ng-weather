@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { WeatherLocation } from './weather-location.model';
 import { WeatherService } from "./weather.service";
 
 @Injectable({
@@ -8,8 +10,8 @@ import { WeatherService } from "./weather.service";
 export class LocationService {
   private readonly LOCATIONS_STORAGE_KEY = 'locations';
 
-  private locationsSubject: BehaviorSubject<string[]> = new BehaviorSubject([]);
-  locations$: Observable<string[]> = this.locationsSubject.asObservable();
+  private locationsSubject: BehaviorSubject<WeatherLocation[]> = new BehaviorSubject([]);
+  locations$: Observable<WeatherLocation[]> = this.locationsSubject.asObservable();
 
   constructor(
     private weatherService: WeatherService
@@ -23,7 +25,7 @@ export class LocationService {
   /**
    * Sets the locations in local storage
    */
-  setLocations(zipcodes: string[]): void {
+  setLocations(zipcodes: WeatherLocation[]): void {
     localStorage.setItem(this.LOCATIONS_STORAGE_KEY, JSON.stringify(zipcodes));
     this.locationsSubject.next([...zipcodes]);
   }
@@ -31,10 +33,10 @@ export class LocationService {
   /**
    * Gets the locations from local storage as an array of string
    */
-  getLocations(): string[] {
+  getLocations(): WeatherLocation[] {
     const jsonValue = localStorage.getItem(this.LOCATIONS_STORAGE_KEY);
     if (!!jsonValue) {
-      return JSON.parse(jsonValue) as string[];
+      return JSON.parse(jsonValue) as WeatherLocation[];
     }
     return [];
   }
@@ -43,35 +45,43 @@ export class LocationService {
    * Removes one location value from the list stored in local storage
    */
   removeLocation(zipcode: string): void {
-    this.setLocations(this.getLocations().filter((value) => value !== zipcode));
+    this.setLocations(this.getLocations().filter((value) => value.zipcode !== zipcode));
     this.weatherService.removeCurrentConditions(zipcode);
   }
 
   /**
-   * Adds one stock value to the list stored in local storage
+   * Adds one location value to the list stored in local storage
    */
-  addLocation(zipcode: string): void {
-    if (!this.isLocationAlreadyAdded(zipcode)) {
-      const newLocationsValue: string[] = [...this.getLocations(), zipcode];
-      this.setLocations(newLocationsValue);
-      this.weatherService.addCurrentConditions(zipcode);
+  addLocation(location: WeatherLocation): void {
+    if (!this.isLocationAlreadyAdded(location.zipcode)) {
+      const newWeatherLocationsValue: WeatherLocation[] = [...this.getLocations(), location];
+      this.setLocations(newWeatherLocationsValue);
+      this.weatherService.addCurrentConditions(location);
     }
   }
 
-  addLocationObs(zipcode: string): Observable<void> {
-    if (!this.isLocationAlreadyAdded(zipcode)) {
-      const newLocationsValue: string[] = [...this.getLocations(), zipcode];
-      this.setLocations(newLocationsValue);
-      return this.weatherService.addCurrentConditionsObs(zipcode);
+  /**
+   * Adds one location value to the list stored in local storage and returns observable
+   */
+  addLocationObs(location: WeatherLocation): Observable<void> {
+    if (!this.isLocationAlreadyAdded(location.zipcode)) {
+      const newWeatherLocationsValue: WeatherLocation[] = [...this.getLocations(), location];
+      this.setLocations(newWeatherLocationsValue);
+      return this.weatherService.addCurrentConditionsObs(location).pipe(
+        catchError(err => {
+          this.removeLocation(location.zipcode);
+          return throwError(err);
+        })
+      );
     }
-    return of();
+    return of(void 0);
   }
 
   /**
    * Returns true if location in parameter is already stored in local storage
    */
   isLocationAlreadyAdded(zipcode: string): boolean {
-    return this.getLocations().includes(zipcode);
+    return this.getLocations().map(location => location.zipcode).includes(zipcode);
   }
 
 }

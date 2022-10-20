@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { AutocompleteOption } from 'app/autocomplete-option.model';
-import { Observable, of } from 'rxjs';
+import { WeatherLocation } from 'app/weather-location.model';
+import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 import { LocationService } from "../location.service";
 
@@ -11,6 +13,11 @@ import { LocationService } from "../location.service";
 })
 export class ZipcodeEntryComponent {
   @ViewChild('zipcode') zipcode: ElementRef;
+
+  form = this.fb.group({
+    countrycode: ['', [Validators.required]],
+    zipcode: ['', [Validators.required]]
+  });
 
   countriesOptions$: Observable<AutocompleteOption[]> = this.http.get<{ name: string, code: string }[]>('/assets/countries.json')
     .pipe(
@@ -25,17 +32,22 @@ export class ZipcodeEntryComponent {
 
   constructor(
     private locationService: LocationService,
-    private http: HttpClient
+    private http: HttpClient,
+    private fb: FormBuilder
   ) { }
 
-  addLocation(): Observable<any> {
-    console.log('addLocation with zipcode', this.zipcode.nativeElement.value);
+  addLocation(): Observable<void> {
+    const weatherLocation: WeatherLocation = {
+      countrycode: this.form.value.countrycode,
+      zipcode: this.form.value.zipcode
+    };
 
-    return this.locationService.addLocationObs(this.zipcode.nativeElement.value).pipe(
-      finalize(() => {
-        this.zipcode.nativeElement.value = '';
-      })
-    );
+    return this.locationService.addLocationObs(weatherLocation)
+      .pipe(
+        finalize(() => {
+          this.form.reset();
+        })
+      );
 
   }
 

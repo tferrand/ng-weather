@@ -1,16 +1,18 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject, combineLatest, interval, Observable, Subscription } from 'rxjs';
-import { delay, tap } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, interval, Observable, of, Subscription } from 'rxjs';
+import { delay, mapTo, switchMap, tap } from 'rxjs/operators';
+import { CurrentCondition } from './current-condition.model';
 
 import { WeatherHttpService } from './weather-http.service';
+import { WeatherLocation } from './weather-location.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WeatherService implements OnDestroy {
 
-  private currentConditionsSubject: BehaviorSubject<any[]> = new BehaviorSubject([]);
-  currentConditions$: Observable<any[]> = this.currentConditionsSubject.asObservable();
+  private currentConditionsSubject: BehaviorSubject<CurrentCondition[]> = new BehaviorSubject([]);
+  currentConditions$: Observable<CurrentCondition[]> = this.currentConditionsSubject.asObservable();
 
   private subscriptions: Subscription = new Subscription();
 
@@ -32,30 +34,31 @@ export class WeatherService implements OnDestroy {
   /**
    * Sets the currentConditions
    */
-  setCurrentConditions(currentConditions: any[]): void {
+  setCurrentConditions(currentConditions: CurrentCondition[]): void {
     this.currentConditionsSubject.next([...currentConditions]);
   }
 
   /**
    * Gets the currentConditions
    */
-  getCurrentConditions(): any[] {
+  getCurrentConditions(): CurrentCondition[] {
     return this.currentConditionsSubject.value;
   }
 
   /**
    * Adds the current conditions for the zipcode
    */
-  addCurrentConditions(zipcode: string): void {
-    this.weatherHttpService.getWeather(zipcode).subscribe(
+  addCurrentConditions(location: WeatherLocation): void {
+    this.weatherHttpService.getWeather(location).subscribe(
       data => this.currentConditionsSubject.next([...this.getCurrentConditions(), data])
     );
   }
 
-  addCurrentConditionsObs(zipcode: string): Observable<void> {
-    return this.weatherHttpService.getWeather(zipcode).pipe(
+  addCurrentConditionsObs(location: WeatherLocation): Observable<void> {
+    return this.weatherHttpService.getWeather(location).pipe(
       delay(1000), // simulate long response to view the state change on the "state-button" component
-      tap(data => this.currentConditionsSubject.next([...this.getCurrentConditions(), data]))
+      tap(data => this.currentConditionsSubject.next([...this.getCurrentConditions(), data])),
+      switchMap(() => of(void 0))
     );
   }
 
@@ -63,7 +66,7 @@ export class WeatherService implements OnDestroy {
    * Removes the current conditions for the zipcode
    */
   removeCurrentConditions(zipcode: string): void {
-    this.setCurrentConditions(this.getCurrentConditions().filter((value) => value.zip !== zipcode));
+    this.setCurrentConditions(this.getCurrentConditions().filter((value) => value.location.zipcode !== zipcode));
   }
 
   /**
@@ -72,7 +75,7 @@ export class WeatherService implements OnDestroy {
   updateCurrentConditionsFromApi(): void {
     combineLatest(
       this.getCurrentConditions()
-        .map(location => this.weatherHttpService.getWeather(location.zip))
+        .map(currentCondtion => this.weatherHttpService.getWeather(currentCondtion.location))
     ).subscribe(
       updatedCurrentConditions => this.setCurrentConditions(updatedCurrentConditions)
     );
