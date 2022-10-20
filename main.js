@@ -50,22 +50,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "AppModule": () => (/* binding */ AppModule)
 /* harmony export */ });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/core */ 2560);
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/forms */ 2508);
-/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/platform-browser */ 4497);
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/common/http */ 8987);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/router */ 124);
-/* harmony import */ var _angular_service_worker__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/service-worker */ 3769);
-/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../environments/environment */ 2340);
-/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./app.component */ 5041);
-/* harmony import */ var _app_routing__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./app.routing */ 6738);
-/* harmony import */ var _current_conditions_current_conditions_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./current-conditions/current-conditions.component */ 5597);
-/* harmony import */ var _forecasts_list_forecasts_list_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./forecasts-list/forecasts-list.component */ 8405);
-/* harmony import */ var _highlight_pipe__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./highlight.pipe */ 296);
-/* harmony import */ var _input_autocomplete_input_autocomplete_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./input-autocomplete/input-autocomplete.component */ 750);
-/* harmony import */ var _main_page_main_page_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./main-page/main-page.component */ 2627);
-/* harmony import */ var _state_button_state_button_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./state-button/state-button.component */ 6773);
-/* harmony import */ var _zipcode_entry_zipcode_entry_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./zipcode-entry/zipcode-entry.component */ 7937);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/forms */ 2508);
+/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/platform-browser */ 4497);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @angular/common */ 4666);
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/common/http */ 8987);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/router */ 124);
+/* harmony import */ var _angular_service_worker__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/service-worker */ 3769);
+/* harmony import */ var _angular_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../angular.json */ 9798);
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../environments/environment */ 2340);
+/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./app.component */ 5041);
+/* harmony import */ var _app_routing__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./app.routing */ 6738);
+/* harmony import */ var _current_conditions_current_conditions_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./current-conditions/current-conditions.component */ 5597);
+/* harmony import */ var _forecasts_list_forecasts_list_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./forecasts-list/forecasts-list.component */ 8405);
+/* harmony import */ var _highlight_pipe__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./highlight.pipe */ 296);
+/* harmony import */ var _input_autocomplete_input_autocomplete_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./input-autocomplete/input-autocomplete.component */ 750);
+/* harmony import */ var _main_page_main_page_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./main-page/main-page.component */ 2627);
+/* harmony import */ var _state_button_state_button_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./state-button/state-button.component */ 6773);
+/* harmony import */ var _zipcode_entry_zipcode_entry_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./zipcode-entry/zipcode-entry.component */ 7937);
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -88,30 +90,35 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+
+
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_10__.NgModule)({
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_11__.NgModule)({
         declarations: [
-            _app_component__WEBPACK_IMPORTED_MODULE_1__.AppComponent,
-            _zipcode_entry_zipcode_entry_component__WEBPACK_IMPORTED_MODULE_9__.ZipcodeEntryComponent,
-            _forecasts_list_forecasts_list_component__WEBPACK_IMPORTED_MODULE_4__.ForecastsListComponent,
-            _current_conditions_current_conditions_component__WEBPACK_IMPORTED_MODULE_3__.CurrentConditionsComponent,
-            _main_page_main_page_component__WEBPACK_IMPORTED_MODULE_7__.MainPageComponent,
-            _state_button_state_button_component__WEBPACK_IMPORTED_MODULE_8__.StateButtonComponent,
-            _input_autocomplete_input_autocomplete_component__WEBPACK_IMPORTED_MODULE_6__.InputAutocompleteComponent,
-            _highlight_pipe__WEBPACK_IMPORTED_MODULE_5__.HighlightPipe
+            _app_component__WEBPACK_IMPORTED_MODULE_2__.AppComponent,
+            _zipcode_entry_zipcode_entry_component__WEBPACK_IMPORTED_MODULE_10__.ZipcodeEntryComponent,
+            _forecasts_list_forecasts_list_component__WEBPACK_IMPORTED_MODULE_5__.ForecastsListComponent,
+            _current_conditions_current_conditions_component__WEBPACK_IMPORTED_MODULE_4__.CurrentConditionsComponent,
+            _main_page_main_page_component__WEBPACK_IMPORTED_MODULE_8__.MainPageComponent,
+            _state_button_state_button_component__WEBPACK_IMPORTED_MODULE_9__.StateButtonComponent,
+            _input_autocomplete_input_autocomplete_component__WEBPACK_IMPORTED_MODULE_7__.InputAutocompleteComponent,
+            _highlight_pipe__WEBPACK_IMPORTED_MODULE_6__.HighlightPipe
         ],
         imports: [
-            _angular_platform_browser__WEBPACK_IMPORTED_MODULE_11__.BrowserModule,
-            _angular_forms__WEBPACK_IMPORTED_MODULE_12__.FormsModule,
-            _angular_common_http__WEBPACK_IMPORTED_MODULE_13__.HttpClientModule,
-            _angular_router__WEBPACK_IMPORTED_MODULE_14__.RouterModule,
-            _app_routing__WEBPACK_IMPORTED_MODULE_2__.routing,
-            _angular_service_worker__WEBPACK_IMPORTED_MODULE_15__.ServiceWorkerModule.register('/ngsw-worker.js', { enabled: _environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.production }),
-            _angular_forms__WEBPACK_IMPORTED_MODULE_12__.ReactiveFormsModule
+            _angular_platform_browser__WEBPACK_IMPORTED_MODULE_12__.BrowserModule,
+            _angular_forms__WEBPACK_IMPORTED_MODULE_13__.FormsModule,
+            _angular_common_http__WEBPACK_IMPORTED_MODULE_14__.HttpClientModule,
+            _angular_router__WEBPACK_IMPORTED_MODULE_15__.RouterModule,
+            _app_routing__WEBPACK_IMPORTED_MODULE_3__.routing,
+            _angular_service_worker__WEBPACK_IMPORTED_MODULE_16__.ServiceWorkerModule.register('/ngsw-worker.js', { enabled: _environments_environment__WEBPACK_IMPORTED_MODULE_1__.environment.production }),
+            _angular_forms__WEBPACK_IMPORTED_MODULE_13__.ReactiveFormsModule
         ],
-        bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_1__.AppComponent]
+        providers: [
+            { provide: _angular_common__WEBPACK_IMPORTED_MODULE_17__.APP_BASE_HREF, useValue: _angular_json__WEBPACK_IMPORTED_MODULE_0__.projects["ng-weather"].architect.build.options.baseHref }
+        ],
+        bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_2__.AppComponent]
     })
 ], AppModule);
 
@@ -691,7 +698,7 @@ let WeatherHttpService = WeatherHttpService_1 = class WeatherHttpService {
             return WeatherHttpService_1.ICON_URL + "art_clear.png";
     }
 };
-WeatherHttpService.URL = 'http://api.openweathermap.org/data/2.5';
+WeatherHttpService.URL = 'https://api.openweathermap.org/data/2.5';
 WeatherHttpService.APPID = '5a4b2d457ecbef9eb2a71e480b947604';
 WeatherHttpService.ICON_URL = 'https://raw.githubusercontent.com/udacity/Sunshine-Version-2/sunshine_master/app/src/main/res/drawable-hdpi/';
 WeatherHttpService.ctorParameters = () => [
@@ -812,8 +819,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "ZipcodeEntryComponent": () => (/* binding */ ZipcodeEntryComponent)
 /* harmony export */ });
 /* harmony import */ var _zipcode_entry_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./zipcode-entry.component.html?ngResource */ 7606);
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/common/http */ 8987);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/common */ 4666);
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/common/http */ 8987);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 2560);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ 2508);
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ 6942);
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ 4661);
@@ -830,8 +838,10 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+
 let ZipcodeEntryComponent = class ZipcodeEntryComponent {
-    constructor(locationService, http, fb) {
+    constructor(baseHref, locationService, http, fb) {
+        this.baseHref = baseHref;
         this.locationService = locationService;
         this.http = http;
         this.fb = fb;
@@ -839,7 +849,7 @@ let ZipcodeEntryComponent = class ZipcodeEntryComponent {
             countrycode: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__.Validators.required]],
             zipcode: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__.Validators.required]]
         });
-        this.countriesOptions$ = this.http.get('/assets/countries.json')
+        this.countriesOptions$ = this.http.get(`${this.baseHref}assets/countries.json`)
             .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.map)(data => data.map(country => {
             const autocompleteOption = {
                 label: `${country.name} (${country.code})`,
@@ -860,15 +870,16 @@ let ZipcodeEntryComponent = class ZipcodeEntryComponent {
     }
 };
 ZipcodeEntryComponent.ctorParameters = () => [
+    { type: String, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_5__.Inject, args: [_angular_common__WEBPACK_IMPORTED_MODULE_6__.APP_BASE_HREF,] }] },
     { type: _location_service__WEBPACK_IMPORTED_MODULE_1__.LocationService },
-    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_5__.HttpClient },
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_7__.HttpClient },
     { type: _angular_forms__WEBPACK_IMPORTED_MODULE_2__.FormBuilder }
 ];
 ZipcodeEntryComponent.propDecorators = {
-    zipcode: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.ViewChild, args: ['zipcode',] }]
+    zipcode: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_5__.ViewChild, args: ['zipcode',] }]
 };
 ZipcodeEntryComponent = __decorate([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_6__.Component)({
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.Component)({
         selector: 'app-zipcode-entry',
         template: _zipcode_entry_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__
     })
@@ -1029,6 +1040,16 @@ module.exports = "<ng-container *ngTemplateOutlet=\"currentTemplate$ | async\">\
 /***/ ((module) => {
 
 module.exports = "<div class=\"well\">\n\n  <form [formGroup]=\"form\" (ngSubmit)=\"addLocation()\">\n    <app-input-autocomplete formControlName=\"countrycode\" [inputName]=\"'country'\" [label]=\"'Country name'\" [options$]=\"countriesOptions$\"></app-input-autocomplete>\n    <br>\n    \n    <label for=\"zipcode\">Enter a zipcode :</label>\n    <input id=\"zipcode\" type=\"text\" #zipcode placeholder=\"Zipcode\" class=\"form-control\" formControlName=\"zipcode\">\n    <br>\n    <app-state-button [clickAction]=\"addLocation.bind(this)\" [initialTemplate]=\"initial\" [workingTemplate]=\"adding\"\n      [doneTemplate]=\"done\"></app-state-button>\n  </form>\n\n</div>\n\n<!-- buttons states -->\n<ng-template #initial>\n  <button class=\"btn btn-primary\">Add Location</button>\n</ng-template>\n\n<ng-template #adding>\n  <button class=\"btn btn-primary\" disabled>Adding...</button>\n</ng-template>\n\n<ng-template #done>\n  <button class=\"btn btn-success\" disabled>✅ Done</button>\n</ng-template>";
+
+/***/ }),
+
+/***/ 9798:
+/*!**********************!*\
+  !*** ./angular.json ***!
+  \**********************/
+/***/ ((module) => {
+
+module.exports = JSON.parse('{"$schema":"./node_modules/@angular/cli/lib/config/schema.json","version":1,"newProjectRoot":"projects","projects":{"ng-weather":{"root":"","sourceRoot":"src","projectType":"application","architect":{"build":{"builder":"@angular-devkit/build-angular:browser","options":{"outputPath":"dist","index":"src/index.html","main":"src/main.ts","tsConfig":"src/tsconfig.app.json","polyfills":"src/polyfills.ts","assets":["src/assets","src/favicon.ico","src/manifest.json"],"styles":["src/styles.css","node_modules/bootstrap/dist/css/bootstrap.min.css"],"scripts":[],"aot":false,"vendorChunk":true,"extractLicenses":false,"buildOptimizer":false,"sourceMap":true,"optimization":false,"namedChunks":true,"baseHref":"/ng-weather/"},"configurations":{"production":{"optimization":true,"outputHashing":"all","sourceMap":false,"namedChunks":false,"aot":true,"extractLicenses":true,"vendorChunk":false,"buildOptimizer":true,"fileReplacements":[{"replace":"src/environments/environment.ts","with":"src/environments/environment.prod.ts"}],"serviceWorker":true}},"defaultConfiguration":""},"serve":{"builder":"@angular-devkit/build-angular:dev-server","options":{"browserTarget":"ng-weather:build"},"configurations":{"production":{"browserTarget":"ng-weather:build:production"}}},"extract-i18n":{"builder":"@angular-devkit/build-angular:extract-i18n","options":{"browserTarget":"ng-weather:build"}},"test":{"builder":"@angular-devkit/build-angular:karma","options":{"main":"src/test.ts","karmaConfig":"./karma.conf.js","polyfills":"src/polyfills.ts","tsConfig":"src/tsconfig.spec.json","scripts":[],"styles":["src/styles.css","node_modules/bootstrap/dist/css/bootstrap.min.css"],"assets":["src/assets","src/favicon.ico","src/manifest.json"]}}}},"ng-weather-e2e":{"root":"","sourceRoot":"","projectType":"application","architect":{"e2e":{"builder":"@angular-devkit/build-angular:protractor","options":{"protractorConfig":"./protractor.conf.js","devServerTarget":"ng-weather:serve"}}}}},"schematics":{"@schematics/angular:component":{"prefix":"app","style":"css"},"@schematics/angular:directive":{"prefix":"app"}}}');
 
 /***/ })
 
