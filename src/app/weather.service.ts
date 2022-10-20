@@ -54,6 +54,9 @@ export class WeatherService implements OnDestroy {
     );
   }
 
+  /**
+   * Adds the current conditions for the zipcode and returns observable when done
+   */
   addCurrentConditionsObs(location: WeatherLocation): Observable<void> {
     return this.weatherHttpService.getWeather(location).pipe(
       delay(1000), // simulate long response to view the state change on the "state-button" component
