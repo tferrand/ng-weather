@@ -19,12 +19,20 @@ export class WeatherService implements OnDestroy {
   constructor(
     private weatherHttpService: WeatherHttpService
   ) {
-    // Update weather value every 30 seconds
-    this.subscriptions.add(
-      interval(30000).subscribe(
-        () => this.updateCurrentConditionsFromApi()
-      )
-    );
+    /**
+     * TODO : Etape 1
+     * 
+     * Implémenter le rafraichissement des conditions météo toutes les 30 secondes
+     * 
+     * RxJS à utiliser :
+     * interval, opérateur "Higher-order mapping" et un opérateur de combinaison de sources
+     * 
+     * Méthodes internes à utiliser :
+     * getCurrentConditions() : Récupère les conditions météo actuelles
+     * this.weatherHttpService.getWeather : Requête http qui récupère les conditions météo pour une localisation
+     * this.setCurrentConditions : Mise à jour des conditions météo
+     */
+    // ICI
   }
 
   ngOnDestroy(): void {
@@ -70,18 +78,6 @@ export class WeatherService implements OnDestroy {
    */
   removeCurrentConditions(zipcode: string): void {
     this.setCurrentConditions(this.getCurrentConditions().filter((value) => value.location.zipcode !== zipcode));
-  }
-
-  /**
-   * Updates current conditions from API for all stored locations
-   */
-  updateCurrentConditionsFromApi(): void {
-    combineLatest(
-      this.getCurrentConditions()
-        .map(currentCondtion => this.weatherHttpService.getWeather(currentCondtion.location))
-    ).subscribe(
-      updatedCurrentConditions => this.setCurrentConditions(updatedCurrentConditions)
-    );
   }
 
 }

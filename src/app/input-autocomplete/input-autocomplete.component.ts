@@ -49,31 +49,21 @@ export class InputAutocompleteComponent implements OnInit, OnDestroy, ControlVal
       })
     );
 
-    this.filteredOptions$ = this.formControl.valueChanges
-      .pipe(
-        startWith(''),
-        debounceTime(400),
-        // distinctUntilChanged(),
-        switchMap(val => {
-          return this.filter(this.formControl.value || '')
-        })
-      )
+    /**
+     * TODO : Etape 2
+     * 
+     * Remplacer par une implémentation permettant de filtrer la liste en fonction de 
+     * la valeur du champ de formulaire
+     * 
+     * RxJS à utiliser :
+     * Opérateur de transformation, Opérateur "Higher-order mapping"
+     */
+    this.filteredOptions$ = this.options$;
 
   }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
-  }
-
-  filter(val: string): Observable<AutocompleteOption[]> {
-    return this.options$
-      .pipe(
-        map(response => response
-          .filter(option => {
-            return option.label.toLowerCase().includes(val.toLowerCase());
-          })
-        )
-      );
   }
 
   writeValue(value: string) {

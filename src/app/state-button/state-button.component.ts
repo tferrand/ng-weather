@@ -28,29 +28,18 @@ export class StateButtonComponent {
   currentTemplate$: Observable<TemplateRef<any>> = NEVER;
 
   ngOnInit() {
-    this.currentTemplate$ = merge(
-      // Initial button template
-      of(this.initialTemplate),
-      // Triggered when button is clicked
-      this.clickSubject.asObservable().pipe(
-        switchMap(() => merge(
-          // display "workingTemplate" when button is clicked
-          of(this.workingTemplate),
-          this.clickAction().pipe(
-            switchMap(() => merge(
-              // display "doneTemplate" when clickAction observable returns value
-              of(this.doneTemplate),
-              // display "initialTemplate" 500ms after clickAction observable returns value
-              timer(500).pipe(
-                map(() => this.initialTemplate)
-              )
-            )),
-            // display "initialTemplate" if error happened during clickAction observable
-            catchError(err => of(this.initialTemplate))
-          ),
-        )),
-      ),
-    );
+
+    /**
+     * TODO : Etape 3
+     * 
+     * RxJS à utiliser :
+     * of, timer, Opérateur de transformation, Opérateurs "Higher-order mapping", Opérateurs de combinaison de sources
+     * 
+     * Méthodes internes à utiliser:
+     * clickSubject : Subject qui émet une valeur à chaque fois que le bouton est cliqué
+     * clickAction : Fonction associée au bouton
+     */
+    this.currentTemplate$ = of(this.initialTemplate);
   }
 
 }
