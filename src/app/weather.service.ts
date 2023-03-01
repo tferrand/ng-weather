@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, combineLatest, interval, Observable, of, Subscription } from 'rxjs';
-import { delay, mapTo, switchMap, tap } from 'rxjs/operators';
+import { delay, switchMap, tap } from 'rxjs/operators';
 import { CurrentCondition } from './current-condition.model';
 
 import { WeatherHttpService } from './weather-http.service';
@@ -19,10 +19,12 @@ export class WeatherService implements OnDestroy {
   constructor(
     private weatherHttpService: WeatherHttpService
   ) {
-    // Update weather value every 30 seconds
+    // Update weather value every 10 seconds
     this.subscriptions.add(
-      interval(30000).subscribe(
-        () => this.updateCurrentConditionsFromApi()
+      interval(10000).pipe(
+        switchMap(() => this.updateCurrentConditionsFromApi())
+      ).subscribe(
+        updatedCurrentConditions => this.setCurrentConditions(updatedCurrentConditions)
       )
     );
   }
@@ -75,12 +77,10 @@ export class WeatherService implements OnDestroy {
   /**
    * Updates current conditions from API for all stored locations
    */
-  updateCurrentConditionsFromApi(): void {
-    combineLatest(
+  updateCurrentConditionsFromApi(): Observable<CurrentCondition[]> {
+    return combineLatest(
       this.getCurrentConditions()
-        .map(currentCondtion => this.weatherHttpService.getWeather(currentCondtion.location))
-    ).subscribe(
-      updatedCurrentConditions => this.setCurrentConditions(updatedCurrentConditions)
+        .map(currentCondition => this.weatherHttpService.getWeather(currentCondition.location))
     );
   }
 
