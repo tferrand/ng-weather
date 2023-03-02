@@ -12,7 +12,7 @@ import { WeatherLocation } from './weather-location.model';
 export class WeatherService implements OnDestroy {
 
   private currentConditionsSubject: BehaviorSubject<CurrentCondition[]> = new BehaviorSubject([]);
-  currentConditions$: Observable<CurrentCondition[]> = this.currentConditionsSubject.asObservable();
+  private _currentConditions$: Observable<CurrentCondition[]> = this.currentConditionsSubject.asObservable();
 
   private subscriptions: Subscription = new Subscription();
 
@@ -31,6 +31,10 @@ export class WeatherService implements OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
+  }
+
+  get currentConditions$(): Observable<CurrentCondition[]> {
+    return this._currentConditions$;
   }
 
   /**
