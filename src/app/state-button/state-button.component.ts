@@ -1,6 +1,6 @@
 import { Component, HostListener, Input, TemplateRef } from '@angular/core';
-import { merge, NEVER, Observable, of, Subject, timer } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { NEVER, Observable, of, Subject } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-state-button',
@@ -40,6 +40,9 @@ export class StateButtonComponent {
      * clickAction : Fonction associée au bouton
      */
     this.currentTemplate$ = of(this.initialTemplate);
+    this.clickSubject.asObservable().pipe(
+      switchMap(() => this.clickAction())
+    ).subscribe();
   }
 
 }

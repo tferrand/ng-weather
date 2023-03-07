@@ -3,7 +3,6 @@ import { Router } from "@angular/router";
 import { CurrentCondition } from 'app/current-condition.model';
 import { LocationService } from 'app/location.service';
 import { WeatherHttpService } from 'app/weather-http.service';
-import { WeatherLocation } from 'app/weather-location.model';
 import { NEVER, Observable } from 'rxjs';
 import { WeatherService } from "../weather.service";
 
@@ -29,5 +28,10 @@ export class CurrentConditionsComponent implements OnInit {
 
   removeLocation(zipcode: string) {
     this.locationService.removeLocation(zipcode);
+  }
+
+  // Temporary, to reload all the app
+  reloadPage() {
+    window.location.reload();
   }
 }
